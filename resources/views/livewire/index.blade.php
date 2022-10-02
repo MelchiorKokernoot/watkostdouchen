@@ -24,37 +24,26 @@
                             </svg>
                         </div>
                         <div class="stat-title">Variabel</div>
-                        <div class="stat-value text-xl">{{$latestRate->rateVariable}}</div>
-                    </div>
-
-                    <div class="stat">
-                        <div class="stat-figure text-secondary">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                 class="inline-block w-8 h-8 stroke-current">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
-                            </svg>
-                        </div>
-                        <div class="stat-title">Vast</div>
-                        <div class="stat-value text-xl">{{$latestRate->rateFixed}}</div>
+                        <div class="stat-value text-xl">€ {{$latestRate->rateVariable}}</div>
                     </div>
                 </div>
-
                 <div class="pt-12">
                     <div class="flex-col">
                         <h1 class="text-5xl font-bold">Hoeveel kost douchen nu?</h1>
                     </div>
-                    <div class="flex-col pt-2 ">
+
+                    <div class="flex-col py-6 ">
                         <div class="flex justify-around">
-                            <label>
-                                Vast
-                                <input type="radio" wire:model="mode" value="fixed" class="radio"/>
-                            </label>
                             <label>
                                 Variabel
                                 <input type="radio" wire:model="mode" value="variable" name="radio-1" class="radio"/>
                             </label>
+                            <label>
+                                Vast
+                                <input type="radio" wire:model="mode" value="fixed" class="radio"/>
+                            </label>
                         </div>
+
                         @if($mode === 'fixed')
                             <div class="flex justify-center">
                                 <div class="form-control w-full max-w-xs">
@@ -65,10 +54,8 @@
                                         wire:model.debounce.500ms="customRate"
                                         type="number"
                                         step="0.01"
-
                                         placeholder="Tarief"
-                                        class="input input-bordered w-full"
-                                    />
+                                        class="input input-bordered w-full"/>
                                     <label class="label">
                                         <span class="label-text-alt">Als u geen tarief invult gebruiken wij het gemiddelde voor de afgelopen maand.</span>
                                     </label>
@@ -77,7 +64,9 @@
                         @endif
                     </div>
 
-                    <p class="py-6">Druk op start wanneer u begint met douchen en stop wanneer u klaar bent.</p>
+                    <p class="py-6">
+                        Druk op start wanneer u begint met douchen en stop wanneer u klaar bent.
+                    </p>
 
                     @if(!$totalPrice)
                         @if(!$timerRunning)
@@ -90,14 +79,18 @@
                         @endif
 
                     @else
+                        <h3 class="text-xl font-semibold py-2">
+                            U heeft {{$this->getTimeDiffForHumans()}} gedoucht. Dat kost u ongeveer:
+                        </h3>
                         <h2 class="text-5xl font-bold py-2">
                             €{{$totalPrice}}
                         </h2>
                     @endif
                 </div>
+
+
+                <p class="py-24">Houdt er ten alle tijden rekening mee dat deze gegevens een indicatie zijn.</p>
             </div>
         </div>
     </div>
-
-
 </div>

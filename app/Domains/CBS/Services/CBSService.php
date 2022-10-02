@@ -18,7 +18,6 @@ class CBSService
         return array_map(function ($item) {
             return new RatePeriod(
                 $item['Perioden'],
-                $item['VastLeveringstarief_2'],
                 $item['VariabelLeveringstarief_3'],
             );
         }, Http::get(self::CBS_API_URL)->json('value'));
