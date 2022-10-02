@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Domains\CBS\Services\CBSService;
 use App\Domains\Classes\RatePeriod;
-use App\Domains\Enums\Mode;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
@@ -18,7 +17,7 @@ class Index extends Component
     public string $timeStart = '';
     public string $timeEnd = '';
     public bool $timerRunning = false;
-    public Mode $mode;
+    public string $mode = 'fixed';
     public $customRate;
     public float $totalPrice;
 
@@ -28,11 +27,6 @@ class Index extends Component
         'mode' => 'required|in:fixed,variable',
         'customRate' => 'numeric|min:0',
     ];
-
-    public function mount()
-    {
-        $this->mode = Mode::VARIABLE;
-    }
 
     public function getLatestRate(): RatePeriod
     {
@@ -56,8 +50,8 @@ class Index extends Component
 
     public function calculatePriceWithLatestRate()
     {
-        if ($this->mode === Mode::FIXED && isset($this->customRate)) {
-                $rate = $this->customRate;
+        if ($this->mode === 'fixed' && isset($this->customRate)) {
+            $rate = $this->customRate;
         } else {
             $rate = $this->getLatestRate()->rateVariable;
         }
